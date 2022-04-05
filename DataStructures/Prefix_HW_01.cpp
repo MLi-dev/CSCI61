@@ -24,21 +24,6 @@ bool inLowPrecForPre(char c, char t) {
     return val;
 }
 
-//For post, same operator,left(operator in stack)take precedence
-
-bool inLowPrecForPost(char c, char t) {
-    bool val = true;
-    switch (c) {
-        case '*':
-        case '/':
-            if (strchr("+-", t) != NULL) {
-                val = false;
-            }
-            break;
-        default: break;
-    }
-    return val;
-}
 
 //Post and prefix logic are siimlar except prefix reverses string, so look to right bracket.
 //Pushes right bracket to stack, use left bracket to match and pop.
@@ -92,49 +77,19 @@ string prefixToInfix(string prefix) {
     return sStack.top();
 }
 
-string infixtoPostFix(string infix) {
-    stack<char> cStack;
-    string result = "";
-    for (int i = 0; i < infix.size(); i++) {
-        char c = infix[i];
-        if (isdigit(c) || isalpha(c)) {
-            result += c;
-        } else if (c == '(') {
-            cStack.push(c);
-        } else if (strchr("+-*/", c) != NULL) {
-            while (!cStack.empty() && inLowPrecForPost(c, cStack.top()) && cStack.top() != '(') { //pop out of cStack
-                result += cStack.top();
-                cStack.pop();
-            }
-            cStack.push(c);
-        } else if (c == ')') {
-            while (cStack.top() != '(') {
-                result += cStack.top();
-                cStack.pop();
-            }
-            cStack.pop();
-        }
-    }
-    while (!cStack.empty()) {
-        result += cStack.top();
-        cStack.pop();
-    }
-    return result;
-}
 
 int main() {
     char c;
     string s = "";
+    cout<<"Please input a valid infix expression"<<endl;
     while (cin.peek() != '\n') {
         cin >> c;
         s += c;
     }
-    string post = infixtoPostFix(s);
-    cout << post << endl;
     reverse(s.begin(), s.end());
     string prefix = infixtoPrefix(s);
     reverse(prefix.begin(), prefix.end());
-    cout << prefix << endl;
-    cout<<prefixToInfix(prefix)<<endl;
+    cout << "Here is the prefix expression: "<< prefix << endl;
+    cout<< "Here is the prefix converted back to infix: "<<prefixToInfix(prefix)<<endl;
 }
 //(A+B)+C-(D-E)^F
