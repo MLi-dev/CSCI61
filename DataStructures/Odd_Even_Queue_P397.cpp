@@ -5,29 +5,30 @@ using namespace std;
 
 
 int main() {
-    queue<char> que;
-    stack<char> stk;
+    queue<char> even;
+    queue<char> odd;
     char c;
     cout<<"Please enter a phrase"<<endl;
+    int i = 0;
     while(cin.peek() != '\n') {
         cin>>c;
-        if(isalpha(c)) {
-            que.push(c);
-            stk.push(c);
+        if(i % 2 == 0) {
+            even.push(c);
+        } else {
+            odd.push(c);
         }
+        i++;
     }
-    int mismatch = 0;
-    while(!que.empty() && !stk.empty()) {
-        if(tolower(que.front()) != tolower(stk.top())) {
-            mismatch++;
-        }
-        que.pop();
-        stk.pop();
+    cout<<"Evens:"<<endl;
+    while(!even.empty()) {
+        cout<<even.front()<<", ";
+        even.pop();
     }
-    if(mismatch > 0) {
-        cout<<"Not a palindrome!"<<endl;
-    } else {
-        cout<<"Is palindrome"<<endl;
+    cout<<endl;
+    cout<<"Odds:"<<endl;
+    while(!odd.empty()) {
+        cout<<odd.front()<<", ";
+        odd.pop();
     }
 }
 //Test line: Able was I ere I saw Elba

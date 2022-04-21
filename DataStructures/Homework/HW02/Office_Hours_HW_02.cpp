@@ -11,7 +11,10 @@ using namespace main_savitch_8A;
 
 void office_hour_simulate(double studentArrival, unsigned int totalTime);
 int main() {
-    office_hour_simulate( 1.0/5, 60);
+    double studentArrivalRate;
+    cout<<"Please input a student arrival rate"<<endl;
+    cin>>studentArrivalRate;
+    office_hour_simulate( studentArrivalRate, 60);
 }
 
 void office_hour_simulate(double studentArrival, unsigned int totalTime) {

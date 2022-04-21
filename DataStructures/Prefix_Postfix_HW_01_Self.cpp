@@ -26,16 +26,17 @@ bool inLowPrecForPre(char c, char t) {
 
 //For post, same operator,left(operator in stack)take precedence
 
-bool inLowPrecForPost(char c, char t) {
+bool inLowPrecForPost(char input, char stackTop) {
     bool val = true;
-    switch (c) {
+    switch(input) {
         case '*':
         case '/':
-            if (strchr("+-", t) != NULL) {
+            if(strchr("+-", stackTop) != NULL) {
                 val = false;
             }
+        break;
+        default:
             break;
-        default: break;
     }
     return val;
 }
@@ -94,32 +95,32 @@ string prefixToInfix(string prefix) {
 
 string infixtoPostFix(string infix) {
     stack<char> cStack;
-    string result = "";
-    for (int i = 0; i < infix.size(); i++) {
+    string output = "";
+    for(int i = 0; i<infix.size(); i++) {
         char c = infix[i];
-        if (isdigit(c) || isalpha(c)) {
-            result += c;
-        } else if (c == '(') {
-            cStack.push(c);
-        } else if (strchr("+-*/", c) != NULL) {
-            while (!cStack.empty() && inLowPrecForPost(c, cStack.top()) && cStack.top() != '(') { //pop out of cStack
-                result += cStack.top();
+        if(isdigit(c) || isalpha(c)) {
+            output+=c;
+        } else if(strchr("+-*/", c) != NULL) {
+            while(!cStack.empty() && inLowPrecForPost(c, cStack.top()) && cStack.top() != '(') {
+                output += cStack.top();
                 cStack.pop();
             }
             cStack.push(c);
-        } else if (c == ')') {
-            while (cStack.top() != '(') {
-                result += cStack.top();
+        } else if(c == ')') {
+            while(cStack.top() != '(') {
+                output+=cStack.top();
                 cStack.pop();
             }
             cStack.pop();
+        } else if(c == '(') {
+            cStack.push(c);
         }
     }
-    while (!cStack.empty()) {
-        result += cStack.top();
+    while(!cStack.empty()) {
+        output+=cStack.top();
         cStack.pop();
     }
-    return result;
+    return output;
 }
 
 int main() {
@@ -137,4 +138,5 @@ int main() {
     cout << prefix << endl;
     cout<<prefixToInfix(prefix)<<endl;
 }
-//(A+B)+C-(D-E)^F
+//3*X+(Y-12)-Z
+//(100/(4/2))/((18/9)+((7*(9/3))*(5+(6-1))))
