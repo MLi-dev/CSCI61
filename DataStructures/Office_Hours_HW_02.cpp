@@ -13,11 +13,10 @@ void office_hour_simulate(double studentArrival, unsigned int totalTime, average
 
 int main() {
     srand(time(NULL));
-    double studentArrivalRate = rand()%100 + 1;
-    cout<<studentArrivalRate<<endl;
     averager wT;
-    int officeHourTimes = 1;
+    int officeHourTimes = 100;
     for(int i = 1; i<=officeHourTimes; i++) {
+        double studentArrivalRate = rand()%20+1;
         office_hour_simulate(studentArrivalRate, 60, wT);
     }
     cout<<"Number of students served: "<<wT.how_many_numbers()<<endl;

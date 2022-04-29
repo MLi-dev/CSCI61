@@ -40,7 +40,7 @@ int main( )
 
     do
     {
-        //print_menu( );
+        print_menu( );
         choice = get_user_command( );
         switch (choice)
         {
@@ -142,6 +142,7 @@ void display_bags(const bag<double>& b1, const bag<double>& b2)
 // Library facilties used: iostream.h
 {
     int i;
+    b2.printBag();
     for (i = 0; i < 10; i++)
     {
         cout << i << " in b1? " << b1.count(i);
