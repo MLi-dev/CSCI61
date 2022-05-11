@@ -49,15 +49,15 @@ namespace main_savitch_10
     }
 
     template <class Item, class SizeType>
-    void print(binary_tree_node<Item>* node_ptr, SizeType depth, std::ostream& out)
+    void print(binary_tree_node<Item>* node_ptr, SizeType depth)
     // Library facilities used: iomanip, iostream, stdlib
     {
         if (node_ptr != NULL)
         {
-            print(node_ptr->right( ), depth+1, out);
-            out << std::setw(4*depth) << ""; // Indent 4*depth spaces.
-            out << node_ptr->data( ) << std::endl;
-            print(node_ptr->left( ),  depth+1, out);
+            print(node_ptr->right( ), depth+1);
+            std::cout << std::setw(4*depth) << ""; // Indent 4*depth spaces.
+            std::cout << node_ptr->data( ) << std::endl;
+            print(node_ptr->left( ),  depth+1);
         }
     }
 
@@ -108,59 +108,28 @@ namespace main_savitch_10
 
     template <class Item>
     void reheapify(binary_tree_node<Item>*& root_ptr) {
-        if (root_ptr->left() == nullptr && root_ptr->right() == nullptr) {
+        if(root_ptr == NULL) {
             return;
         }
-        else {
-            Item tempData;
-            if (root_ptr->left() != nullptr) {
-                if (root_ptr->data() < root_ptr->left()->data()) {
-                    reheapify(root_ptr->left());
-                    tempData = root_ptr->data();
-                    root_ptr->set_data(root_ptr->left()->data());
-                    root_ptr->left()->set_data(tempData);
-                    reheapify(root_ptr->left());
-                }
-            }
-
-            if (root_ptr->right() != nullptr) {
-                if (root_ptr->data() < root_ptr->right()->data()) {
-                    reheapify(root_ptr->right());
-                    tempData = root_ptr->data();
-                    root_ptr->set_data(root_ptr->right()->data());
-                    root_ptr->right()->set_data(tempData);
-                    reheapify(root_ptr->right());
-                }
-
+        int curVal = root_ptr->data();
+        int leftVal = 0;
+        int rightVal = 0;
+        if(root_ptr->left() != NULL) {
+            leftVal = root_ptr->left()->data();
+        }
+        if(root_ptr->right() != NULL) {
+            rightVal = root_ptr->right()->data();
+        }
+        int larger = std::max(leftVal, rightVal);
+        if(curVal < larger) {
+            root_ptr->set_data(larger);
+            if(larger == leftVal) {
+                root_ptr->left()->set_data(curVal);
+            } else {
+                root_ptr->right()->set_data(curVal);
             }
         }
-    }
-
-    template <class Item>
-    void reheapify1(binary_tree_node<Item>*& root_ptr) {
-       if(root_ptr == NULL) {
-           return;
-       }
-       int curVal = root_ptr->data();
-       int leftVal = 0;
-       int rightVal = 0;
-       if(root_ptr->left() != NULL) {
-            leftVal = root_ptr->left()->data();
-       }
-       if(root_ptr->right() != NULL) {
-           rightVal = root_ptr->right()->data();
-       }
-       int larger = std::max(leftVal, rightVal);
-       if(curVal < larger) {
-           root_ptr->set_data(larger);
-           if(larger == leftVal) {
-               root_ptr->left()->set_data(curVal);
-           } else {
-               root_ptr->right()->set_data(curVal);
-           }
-       }
         reheapify(root_ptr->left());
         reheapify(root_ptr->right());
-
     }
 }

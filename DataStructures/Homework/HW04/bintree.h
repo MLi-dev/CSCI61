@@ -107,7 +107,7 @@
 //     Postcondition: The return value is the number of nodes in the tree.
 
 #include <cstdlib>  // Provides NULL and size_t
-#include <fstream>
+
 namespace main_savitch_10
 {
 
@@ -158,7 +158,7 @@ namespace main_savitch_10
     void postorder(Process f, BTNode* node_ptr);
 
     template <class Item, class SizeType>
-    void print(binary_tree_node<Item>* node_ptr, SizeType depth, std::ostream& out);
+    void print(binary_tree_node<Item>* node_ptr, SizeType depth);
 
     template <class Item>
     void tree_clear(binary_tree_node<Item>*& root_ptr);
