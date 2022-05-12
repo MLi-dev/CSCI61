@@ -9,12 +9,30 @@
 using namespace std;
 using namespace main_savitch_8A;
 
+struct myComp {
+    bool operator()(pair<int, int>& a, pair<int, int>& b)
+    {
+        return a.first > b.first;
+    }
+};
+
 void office_hour_simulate(double studentArrival, unsigned int totalTime, averager& waitTime);
 
 int main() {
+//    priority_queue<pair<int,int>, vector<pair<int, int>>, myComp> waitLine;
+//    for(int i = 0; i<10; i++) {
+//        int priority = rand() % 100 + 1;
+//        pair<int, int> p(priority, 1);
+//        waitLine.push(p);
+//    }
+//    for(int i = 0; i<10; i++) {
+//        cout<<waitLine.top().first<<endl;
+//        waitLine.pop();
+//    }
+
     srand(time(NULL));
     averager wT;
-    int officeHourTimes = 100;
+    int officeHourTimes = 3;
     for(int i = 1; i<=officeHourTimes; i++) {
         double studentArrivalRate = rand()%20+1;
         office_hour_simulate(studentArrivalRate, 60, wT);
@@ -26,18 +44,26 @@ int main() {
 }
 
 void office_hour_simulate(double studentArrival, unsigned int totalTime, averager& waitTime) {
-    queue<unsigned int> waitLine;
+    priority_queue<pair<int,int>, vector<pair<int, int>>, myComp> waitLine;
     unsigned int next;
     bool_source arrival(studentArrival);
     education teach;
     int curSec=0;
     for (curSec = 1; curSec <= totalTime; curSec++) {
+        int priority = rand()%100+1;
+        pair<int, int> p(priority, curSec);
         if (arrival.query()) {
-            waitLine.push(curSec);
+            waitLine.push(p);
         }
         if (!teach.is_busy() && !waitLine.empty()) {
-            next = waitLine.front();
+            next = waitLine.top().second;
+            cout<<"Student priority is: "<<waitLine.top().first<<endl;
             waitLine.pop();
+            if(!waitLine.empty()) {
+                cout<<"The next student priority is: "<<waitLine.top().first<<endl;
+            } else {
+                cout<<"There is nobody else in the line waiting"<<endl;
+            }
             waitTime.next_number(curSec - next);
             int duration = teach.start_teaching();
             waitTime.student_session_time(duration);
@@ -47,7 +73,7 @@ void office_hour_simulate(double studentArrival, unsigned int totalTime, average
     }
     while (!waitLine.empty()) {
         if (!teach.is_busy() && !waitLine.empty()) {
-            next = waitLine.front();
+            next = waitLine.top().second;
             waitLine.pop();
             waitTime.next_number(curSec - next);
             int duration = teach.start_teaching();
