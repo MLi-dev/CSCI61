@@ -12,7 +12,7 @@ using namespace main_savitch_11;
 int main() {
     ofstream outStream;
     outStream.open("outfile.txt");
-    char c[10] = {'S', 'F', 'E', 'V', 'D', 'U', 'J', 'P', 'O', 'I'};
+    char c[10] = {'S', 'F', 'E', 'V', 'D', 'U', 'J', 'P', 'O', 'T'};
     main_savitch_11::set<char> charSet;
     for(int i = 0; i<10; i++) {
         outStream<<"Adding "<<c[i]<<endl;
