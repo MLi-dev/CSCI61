@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 #include <stack>
-#include "bintree.h"
+#include "../bintree.h"
 #include "useful.h"
 using namespace main_savitch_10;
 

@@ -101,7 +101,7 @@ int main( )
 }
 
 void display_bag_tree(bag<double> b) {
-    b.printBag();
+    b.printBag(cout);
 }
 
 void print_menu( )

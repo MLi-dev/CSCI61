@@ -4,8 +4,8 @@
 
 #include <cassert>
 #include <iostream>
-#include "stack3.h" // Provides the stack class with a peek(i) function.
-#include "stack3.cpp"
+#include "../stack3.h" // Provides the stack class with a peek(i) function.
+#include "../stack3.cpp"
     using namespace std;
     using namespace main_savitch_7A;
     void print_solution(stack<int> choices)
