@@ -7,13 +7,11 @@
 
 Student::Student(double curSec) {
     string nameChar = "1234567890";
-    string topicChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string topicArr[4] = {"Math", "English", "Science", "History"};
     for(int i = 0; i<1; i++) {
         name_+=nameChar[rand()%10];
     }
-    for(int i = 0; i<15; i++) {
-        topic_ +=topicChar[rand()%25];
-    }
+        topic_ =topicArr[rand()%4];
     arrivalTime_ = curSec;
     priority_ = (rand() % 10) + 1; //1 - 10 (inclusive).
 }

@@ -21,51 +21,14 @@ struct myComp {
 };
 
 void office_hour_simulate(double studentArrival, unsigned int totalTime, averager &waitTime, multimap<string, string>& mp);
+void office1();
+void office2();
 
 int main() {
-//    priority_queue<pair<int,int>, vector<pair<int, int>>, myComp> waitLine;
-//    for(int i = 0; i<10; i++) {
-//        int priority = rand() % 100 + 1;
-//        pair<int, int> p(priority, 1);
-//        waitLine.push(p);
-//    }
-//    for(int i = 0; i<10; i++) {
-//        outStream<<waitLine.top().first<<endl;
-//        waitLine.pop();
-//    }
-    ofstream outStream; 
-    outStream.open("Officeoursout.txt"); 
-    srand(time(NULL));
-    averager wT;
-    int officeHourTimes = 3;
-    multimap<string, string> mp;
-
-    for(int i = 1; i<=officeHourTimes; i++) {
-        double studentArrivalRate = rand()%20+1;
-        office_hour_simulate(studentArrivalRate, 60, wT, mp);
-    }
-    outStream << "Number of students served: " << wT.how_many_numbers() << endl;
-    outStream << "The average waiting time is: " << wT.averageWait() << " minutes" << endl;
-    outStream << "Average time student spent working with professor is: " << wT.averageSpend() << " minutes" << endl;
-    outStream << "Average time professor spent overtime each OH hosted is: " << wT.averageOver(officeHourTimes) << " minutes"
-         << endl;
-    multimap<string, string>::const_iterator i;
-    set<string> keySet;
-    for(i = mp.begin(); i!= mp.end(); i++) {
-        keySet.insert(i->first);
-    }
-    for(auto e: keySet) {
-        outStream<<"*********************************************************"<<endl;
-        outStream<<"Report for "<<e<<": "<<endl;
-        outStream<<"*********************************************************"<<endl;
-        int count = 0;
-        for(auto itr = mp.find(e); itr != mp.end(); itr++) {
-            outStream<<"Topic taken: "<<itr->second<<endl;
-            count++;
-        }
-        outStream<<"Total office hour time: "<<count<<endl;
-
-    }
+    //Office1 prints out the simulation report.
+    office1();
+    //Office2 prints out the report as an input of a sorting function.
+    office2();
 
 }
 
@@ -114,4 +77,58 @@ void office_hour_simulate(double studentArrival, unsigned int totalTime, average
     }
     int overtime = curSec - totalTime;
     waitTime.teacher_finished(overtime);
+}
+void office1() {
+    ofstream outStream;
+    outStream.open("Officeoursout.txt");
+    srand(time(NULL));
+    averager wT;
+    int officeHourTimes = 3;
+    multimap<string, string> mp;
+
+    for(int i = 1; i<=officeHourTimes; i++) {
+        double studentArrivalRate = rand()%20+1;
+        office_hour_simulate(studentArrivalRate, 60, wT, mp);
+    }
+    outStream << "Number of students served: " << wT.how_many_numbers() << endl;
+    outStream << "The average waiting time is: " << wT.averageWait() << " minutes" << endl;
+    outStream << "Average time student spent working with professor is: " << wT.averageSpend() << " minutes" << endl;
+    outStream << "Average time professor spent overtime each OH hosted is: " << wT.averageOver(officeHourTimes) << " minutes"
+              << endl;
+    multimap<string, string>::const_iterator i;
+    set<string> keySet;
+    for(i = mp.begin(); i!= mp.end(); i++) {
+        keySet.insert(i->first);
+    }
+    for(auto e: keySet) {
+        outStream<<"*********************************************************"<<endl;
+        outStream<<"Report for "<<e<<": "<<endl;
+        outStream<<"*********************************************************"<<endl;
+        int count = 0;
+        for(auto itr = mp.find(e); itr != mp.end(); itr++) {
+            outStream<<"Topic taken: "<<itr->second<<endl;
+            count++;
+        }
+        outStream<<"Total office hour time: "<<count<<endl;
+
+    }
+}
+void office2() {
+    ofstream outStream;
+    outStream.open("Officeoursout2.txt");
+    srand(time(NULL));
+    averager wT;
+    int officeHourTimes = 3;
+    multimap<string, string> mp;
+
+    for(int i = 1; i<=officeHourTimes; i++) {
+        double studentArrivalRate = rand()%20+1;
+        office_hour_simulate(studentArrivalRate, 60, wT, mp);
+    }
+    multimap<string, string>::const_iterator i;
+    set<string> keySet;
+    for(i = mp.begin(); i!= mp.end(); i++) {
+       outStream<<i->first<<" "<<i->second<<endl;
+    }
+
 }
