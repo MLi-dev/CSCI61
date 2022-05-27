@@ -16,6 +16,8 @@
 #include <cassert>  // Provides assert
 #include <cstdlib>  // Provides size_t
 #include "table2.h"
+#include "node2.h"
+#include "node2.cpp"
 using namespace main_savitch_6B;
 
 namespace main_savitch_12B {
@@ -32,9 +34,25 @@ namespace main_savitch_12B {
     table<RecordType>::table() {
         std::size_t i;
 
-        used = 0;
+        total_records = 0;
         for (i = 0; i < CAPACITY; ++i)
-            data[i].key = NEVER_USED;  // Indicates a spot that's never been used.
+            data[i] = NULL;  // Indicates a spot that's never been used.
+    }
+
+    template<class RecordType>
+    table<RecordType>::~table() {
+        std::size_t i;
+
+        for (i = 0; i < CAPACITY; ++i) {
+            while (data[i] != NULL) {
+                main_savitch_6B::node <RecordType>* remove_ptr;
+
+                remove_ptr = data[i];
+                data[i] = data[i]->link();
+                delete remove_ptr;
+            }
+            total_records = 0;
+        }
     }
 
     template<class RecordType>
@@ -46,14 +64,19 @@ namespace main_savitch_12B {
 
         assert(entry.key >= 0);
         index = hash(entry.key);
-        main_savitch_6B::node<RecordType> *cur = data[index];
-        main_savitch_6B::node<RecordType> *node = new main_savitch_6B::node<RecordType> *(entry, NULL);
-        while (cur->link() != NULL) {
-            cur = cur->link();
+        main_savitch_6B::node<RecordType> *head = data[index];
+        main_savitch_6B::node<RecordType> *node = new main_savitch_6B::node<RecordType>(entry, NULL);
+        if(head == NULL) {
+            head = node;
+        } else {
+            main_savitch_6B::node<RecordType> *cur = head;
+            while (cur->link() != NULL) {
+                cur = cur->link();
+            }
+            cur->set_link(node);
         }
-        main_savitch_6B::node<RecordType> *node2 = new main_savitch_6B::node<RecordType> *(entry, NULL);
-        cur->set_link(node2);
-        used++;
+        data[index] = head;
+        total_records++;
     }
 
     template<class RecordType>
@@ -65,28 +88,25 @@ namespace main_savitch_12B {
 
         assert(key >= 0);
         index = hash(key);
-        if (is_present(key)) {   // The key was found, so remove this record and reduce used by 1.
-            node<RecordType> *cur = data[index];
+        if (is_present(key)) {
+            main_savitch_6B::node<RecordType> *cur = data[index];
             removeHelper(key, cur);
             if(cur->link() == NULL) {
                 data[index] = nullptr;
             }
         }
-        used--;
+        total_records--;
 
     }
     //Practice more
-    template<class T>
-    void removeHelper(const T &p, node<T>* head) {
-        std::size_t numDeleted = 0;
-        node<T> *dummy = new node<T>(-1, head);
-        node<T> *cur = dummy;
+    template<class RecordType>
+    void table<RecordType>::removeHelper(int p, node<RecordType>* head) {
+        RecordType r;
+        main_savitch_6B::node<RecordType> *dummy = new main_savitch_6B::node<RecordType>(r, head);
+        node<RecordType> *cur = dummy;
         while (cur->link() != nullptr) {
             if (cur->link()->data().key == p) {
-                node<T> *temp = cur->link();
-                cur->setlink(cur->link()->link());
-                delete temp;
-                numDeleted++;
+                list_remove(cur);
             } else {
                 cur = cur->link();
             }
@@ -99,6 +119,7 @@ namespace main_savitch_12B {
     bool table<RecordType>::is_present(int key) const
     // Library facilities used: assert.h
     {
+        std::size_t index;
         index = hash(key);
         node<RecordType>* temp = data[index];
         if(temp != NULL) {
@@ -112,17 +133,14 @@ namespace main_savitch_12B {
     // Library facilities used: cassert.h
     {
        if(is_present(key)) {
-           index = hash(key);
+           std::size_t index = hash(key);
            node<RecordType> *cur = data[index];
-           while(cur->data() != result) {
-               cur = cur->link();
-           }
-           if(cur->data() == result) {
+           node<RecordType> *node = list_search(cur, key);
+           if(node!=NULL) {
                found = true;
-               result = cur->data();
+               result = node->data();
            } else {
                found = false;
-               result = NULL;
            }
        }
     }

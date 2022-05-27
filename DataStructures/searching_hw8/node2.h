@@ -58,7 +58,7 @@ namespace main_savitch_6B
     void list_remove(node<Item>* previous_ptr);
 
     template <class NodePtr, class Item>
-    NodePtr list_search(NodePtr head_ptr, const Item& target);
+    NodePtr list_search(NodePtr head_ptr, Item& target);
 
     // FORWARD ITERATORS to step through the nodes of a linked list
     // A node_iterator of can change the underlying linked list through the

@@ -8,6 +8,7 @@
 #define TABLE2_H
 #include <cstdlib>    // Provides size_t
 #include "node2.h"    // Provides the node type, from Figure 6.5 on page 306
+using namespace main_savitch_6B;
 
 namespace main_savitch_12B
 {
@@ -29,10 +30,11 @@ namespace main_savitch_12B
         void find(int key, bool& found, RecordType& result) const;
         bool is_present(int key) const;
         std::size_t size( ) const { return total_records; }
+        void removeHelper(int p, node<RecordType>* head);
     private:
         static const int NEVER_USED = -1;
         static const int PREVIOUSLY_USED = -2;
-        main_savitch_6B::node<RecordType> *data[CAPACITY];
+        node<RecordType> *data[CAPACITY];
         std::size_t used;
         std::size_t total_records;
         // HELPER MEMBER FUNCTION
