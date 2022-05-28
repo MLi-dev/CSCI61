@@ -105,13 +105,13 @@ namespace main_savitch_6B
     }
 
     template <class NodePtr, class Item>
-    NodePtr list_search(NodePtr head_ptr, const Item& target)
+    NodePtr list_search(NodePtr head_ptr, Item& target)
     // Library facilities used: cstdlib
     {
         NodePtr cursor;
 
         for (cursor = head_ptr; cursor != NULL; cursor = cursor->link( ))
-            if (target == cursor->data( ))
+            if (target == cursor->data( ).key)
                 return cursor;
         return NULL;
     }
