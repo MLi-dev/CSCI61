@@ -111,8 +111,9 @@ namespace main_savitch_6B
         NodePtr cursor;
 
         for (cursor = head_ptr; cursor != NULL; cursor = cursor->link( ))
-            if (target == cursor->data( ))
+            if (target == cursor->data().key) {
                 return cursor;
+            }
         return NULL;
     }
 }
