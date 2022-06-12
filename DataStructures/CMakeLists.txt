@@ -3,6 +3,7 @@ project(DataStructures)
 
 set(CMAKE_CXX_STANDARD 14)
 
+add_subdirectory("${PROJECT_SOURCE_DIR}/graph_hw9" "${PROJECT_SOURCE_DIR}/graph_hw9/output")
 add_subdirectory("${PROJECT_SOURCE_DIR}/searching_hw8" "${PROJECT_SOURCE_DIR}/searching_hw8/output")
 add_subdirectory("${PROJECT_SOURCE_DIR}/searching_practice" "${PROJECT_SOURCE_DIR}/searching_practice/output")
 add_subdirectory("${PROJECT_SOURCE_DIR}/CodeForcesPractice" "${PROJECT_SOURCE_DIR}/CodeForcesPractice/output")

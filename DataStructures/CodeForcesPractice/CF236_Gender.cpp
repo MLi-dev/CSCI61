@@ -1,8 +1,6 @@
-#include <iostream>
-using namespace std;
-#include <vector>
 #include <bits/stdc++.h>
-#include <set>
+using namespace std;
+
 
 int main() {
     string s;

@@ -3,5 +3,5 @@ project(DataStructures)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(CodeForcesPractice CF381_Card.cpp)
+add_executable(CodeForcesPractice CF443_Letters.cpp)
 

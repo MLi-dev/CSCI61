@@ -3,13 +3,9 @@
 //
 
 
-#include <queue>
-#include <iostream>
+#include <bits/stdc++.h>
 #include "Office_Hours_Simulator.h"
-#include "map"
 #include "Student.h"
-#include "set"
-#include "fstream"
 
 using namespace std;
 using namespace main_savitch_8A;
@@ -116,4 +112,3 @@ void office1() {
     }
 }
 
-}

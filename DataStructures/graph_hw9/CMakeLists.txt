@@ -3,4 +3,4 @@ project(DataStructures)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(searching_hw8 HW_08_P3.cpp)
+add_executable(graph_hw9 graphsMain.cpp graph.h graph.cpp)

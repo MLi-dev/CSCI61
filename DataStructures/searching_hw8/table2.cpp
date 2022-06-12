@@ -72,9 +72,8 @@ namespace main_savitch_12B {
             if(cur->link() == NULL) {
                 data[index] = nullptr;
             }
+            total_records--;
         }
-        total_records--;
-
     }
     //Practice more
     template<class RecordType>

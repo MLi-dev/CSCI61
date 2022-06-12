@@ -20,6 +20,7 @@ bool search(vector<vector<char>> puzzle, string word, crossWord &cw, int row, in
 
 int main() {
     ifstream fin;
+    ofstream fout;
     fin.open("puzzle.txt");
     if (fin.fail()) {
         cout << "FILE OPENING FAILED" << endl;
@@ -40,7 +41,7 @@ int main() {
     }
     fin.close();
     ifstream instream;
-    instream.open("words.txt");
+    instream.open("wordtest.txt");
     if (instream.fail()) {
         cout << "DICTIONARY OPENING FAILED" << endl;
     }
@@ -66,10 +67,11 @@ int main() {
         }
     }
     //   sort(result.begin(), result.end());
+    fout.open("output.txt");
     for (auto e: result) {
-        cout << e.word << endl;
-        cout << "(" << e.x1 << "," << e.y1 << ")" << endl;
-        cout << "(" << e.x2 << "," << e.y2 << ")" << endl;
+        fout << e.word << endl;
+        fout << "(" << e.x1 << "," << e.y1 << ")" << endl;
+        fout << "(" << e.x2 << "," << e.y2 << ")" << endl;
     }
 }
 
